@@ -12,23 +12,27 @@ S = np.array(
 
 
 def Rarb(angle: float, axis: Sequence[float]):
+    """Arbitrary rotation around given axis"""
+
+    # normalise axis vector
     u = np.array(axis, dtype=np.float64).flatten()
     u /= np.linalg.norm(u)
     ux, uy, uz = u
-    cos = np.cos(angle)
-    sin = np.sin(angle)
-    icos = 1 - cos
 
-    return np.array(
-        [
-            [cos + ux**2 * icos, ux * uy * icos - uz * sin, ux * uz * icos + uy * sin],
-            [uy * ux * icos + uz * sin, cos + uy**2 * icos, uy * uz * icos - ux * sin],
-            [uz * ux * icos - uy * sin, uz * uy * icos + ux * sin, cos + uz**2 * icos],
-        ]
-    )
+    # use Rodrigues' rotation formula
+    # R = I + sin(θ)K + (1- cos(θ))K²
+    # where K is the cross-product matrix
+    K = np.array([
+        [0, -uz, uy],
+        [uz, 0, -ux],
+        [-uy, ux, 0],
+    ])
+
+    return np.eye(3) + np.sin(angle) * K + (1- np.cos(angle)) * (K@K)
 
 
 def Rspin(angle: float):
+    """Rotate around the y axis (vertical)"""
     return np.array(
         [
             [np.cos(angle), 0, np.sin(angle)],
@@ -39,6 +43,7 @@ def Rspin(angle: float):
 
 
 def Rtilt(angle: float):
+    """Rotate around the anti-(XZ) axis"""
     return np.array(
         [
             [
