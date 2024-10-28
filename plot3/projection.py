@@ -10,6 +10,7 @@ S = np.array(
     ]
 )
 
+
 def Rarb(angle: float, axis: Sequence[float]):
     u = np.array(axis, dtype=np.float64).flatten()
     u /= np.linalg.norm(u)
@@ -18,11 +19,14 @@ def Rarb(angle: float, axis: Sequence[float]):
     sin = np.sin(angle)
     icos = 1 - cos
 
-    return np.array([
-        [cos+ux**2*icos, ux*uy*icos-uz*sin, ux*uz*icos+uy*sin],
-        [uy*ux*icos+uz*sin, cos+uy**2*icos, uy*uz*icos-ux*sin],
-        [uz*ux*icos-uy*sin, uz*uy*icos+ux*sin, cos+uz**2*icos],
-    ])
+    return np.array(
+        [
+            [cos + ux**2 * icos, ux * uy * icos - uz * sin, ux * uz * icos + uy * sin],
+            [uy * ux * icos + uz * sin, cos + uy**2 * icos, uy * uz * icos - ux * sin],
+            [uz * ux * icos - uy * sin, uz * uy * icos + ux * sin, cos + uz**2 * icos],
+        ]
+    )
+
 
 def Rspin(angle: float):
     return np.array(
@@ -37,9 +41,17 @@ def Rspin(angle: float):
 def Rtilt(angle: float):
     return np.array(
         [
-            [(1+np.cos(angle))/2, np.sin(angle)/np.sqrt(2), -(1-np.cos(angle))/2],
-            [-np.sin(angle)/np.sqrt(2), np.cos(angle), -np.sin(angle)/np.sqrt(2)],
-            [-(1-np.cos(angle))/2, np.sin(angle)/np.sqrt(2), (1+np.cos(angle))/2],
+            [
+                (1 + np.cos(angle)) / 2,
+                np.sin(angle) / np.sqrt(2),
+                -(1 - np.cos(angle)) / 2,
+            ],
+            [-np.sin(angle) / np.sqrt(2), np.cos(angle), -np.sin(angle) / np.sqrt(2)],
+            [
+                -(1 - np.cos(angle)) / 2,
+                np.sin(angle) / np.sqrt(2),
+                (1 + np.cos(angle)) / 2,
+            ],
         ]
     )
 
