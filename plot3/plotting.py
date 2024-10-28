@@ -13,7 +13,7 @@ def plot(
     ax: Axes | None = None,
     method="line",
     tilt: float = 0,
-    yaw: float = 0,
+    spin: float = 0,
     **kwargs,
 ):
     xa = np.array(xs)
@@ -28,7 +28,7 @@ def plot(
         ]
     )
 
-    flat_points = project(points, tilt=tilt, yaw=yaw)
+    flat_points = project(points, tilt=tilt, spin=spin)
 
     if ax is None:
         ax = plt.figure().add_subplot()
@@ -52,7 +52,7 @@ def scatter(
     zs: NDArray,
     ax: Axes | None = None,
     tilt: float = 0,
-    yaw: float = 0,
+    spin: float = 0,
     **kwargs,
 ):
-    return plot(xs, ys, zs, ax=ax, method="scatter", tilt=tilt, yaw=yaw, **kwargs)
+    return plot(xs, ys, zs, ax=ax, method="scatter", tilt=tilt, spin=spin, **kwargs)
